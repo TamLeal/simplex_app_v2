@@ -7,33 +7,40 @@
   --shadow-color: rgba(0, 0, 0, 0.1);
 }
 
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
 body {
   background-color: var(--background-color);
   color: var(--text-color);
   font-family: 'Roboto', Arial, sans-serif;
   line-height: 1.6;
-  margin: 0;
-  padding: 0;
 }
 
 .container {
-  width: 100%;
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 20px;
-  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .header {
   text-align: center;
   color: var(--primary-color);
-  margin-bottom: 30px;
+  padding: 20px 0;
 }
 
 .content {
   display: flex;
-  gap: 20px;
-  height: 78vh;
+  flex: 1;
+  gap: 20px; /* Espaçamento entre os cards */
+  padding: 10px;
+  overflow: hidden;
 }
 
 .column {
@@ -41,25 +48,27 @@ body {
   border-radius: 8px;
   box-shadow: 0 4px 6px var(--shadow-color);
   padding: 20px;
-  flex: 1; /* Cada coluna ocupa o mesmo espaço */
   overflow-y: auto;
-}
-
-.input-column,
-.result-column,
-.solution-column {
-  display: none; /* Inicialmente escondido */
-  flex: 1;
-}
-
-.result-column.active,
-.solution-column.active {
-  display: block; /* Mostrar colunas quando ativas */
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
 }
 
 .input-column {
   display: flex;
-  flex-direction: column;
+  flex: 0 0 30%; /* Tamanho inicial fixo para o card de input */
+}
+
+.result-column,
+.solution-column {
+  display: none;
+  flex: 0 0 30%; /* Tamanho fixo quando aparecerem */
+}
+
+.result-column.active,
+.solution-column.active {
+  display: flex;
+  flex: 0 0 30%; /* Mantém o tamanho fixo após ativar */
 }
 
 .flex-container {
@@ -197,29 +206,23 @@ body {
   margin-bottom: 20px;
 }
 
-@media (max-width: 1200px) {
-  .content {
-    flex-direction: column;
-  }
-
-  .column {
-    height: auto;
-    max-height: none;
-  }
-
-  .input-column,
-  .solution-column,
-  .result-column {
-    flex: 1 1 auto;
-  }
+.graph {
+  width: 100%;
+  height: 300px;
 }
 
 @media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+  }
+  .column {
+    margin: 5px;
+    padding: 10px;
+  }
   .flex-container {
     flex-direction: column;
     align-items: stretch;
   }
-
   .input,
   .select,
   .button {
