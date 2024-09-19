@@ -35,6 +35,11 @@ const Solution = ({ steps, currentStep, setCurrentStep, solution, objective }) =
     );
   };
 
+  const renderBaseColumn = (rowIndex) => {
+    // Se for a última linha, mantém "Z", senão usa "P1", "P2", "P3", ...
+    return rowIndex === getCurrentTableau().length - 1 ? 'Z' : `P${rowIndex + 1}`;
+  };
+
   return (
     <div>
       <h2>Solução Passo a Passo</h2>
@@ -71,7 +76,8 @@ const Solution = ({ steps, currentStep, setCurrentStep, solution, objective }) =
         <tbody>
           {getCurrentTableau().map((row, rowIndex) => (
             <tr key={rowIndex}>
-              <td>{rowIndex === getCurrentTableau().length - 1 ? 'Z' : `x${rowIndex + 1}`}</td>
+              {/* Aqui trocamos a nomenclatura da coluna BASE */}
+              <td>{renderBaseColumn(rowIndex)}</td>
               {row.map((cell, cellIndex) => renderCell(cell, rowIndex, cellIndex))}
             </tr>
           ))}
