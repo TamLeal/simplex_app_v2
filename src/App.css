@@ -54,9 +54,10 @@ body {
   transition: all 0.3s ease;
 }
 
+/* Estilo para a coluna de input */
 .input-column {
   display: flex;
-  flex: 0 0 30%; /* Tamanho inicial fixo para o card de input */
+  flex: 0 0 30%;
 }
 
 .result-column,
@@ -68,17 +69,52 @@ body {
 .result-column.active,
 .solution-column.active {
   display: flex;
-  flex: 0 0 30%; /* Mantém o tamanho fixo após ativar */
+  flex: 0 0 30%;
 }
 
-.flex-container {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
+/* Estilos para o card de solução final */
+.final-solution {
+  background-color: #f1f2f6;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Sombra leve para destacar */
+}
+
+.solution-details p {
+  margin: 8px 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.solution-details strong {
+  color: var(--primary-color);
+}
+
+/* Estilos para a área do gráfico */
+.graph-container {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Sombra leve para destacar */
+}
+
+.graph-container h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--primary-color);
   margin-bottom: 15px;
 }
 
+.graph-container .recharts-wrapper {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adiciona sombra no gráfico */
+  padding: 10px;
+}
+
+/* Estilos gerais para inputs e selects */
 .input,
 .select {
   padding: 8px;
@@ -103,6 +139,7 @@ body {
   box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.2);
 }
 
+/* Estilos para botões */
 .button {
   padding: 8px 16px;
   background-color: var(--primary-color);
@@ -201,11 +238,7 @@ body {
   background-color: #e8f4fd;
 }
 
-.final-solution,
-.graph {
-  margin-bottom: 20px;
-}
-
+/* Estilos para o gráfico */
 .graph {
   width: 100%;
   height: 300px;
@@ -227,5 +260,12 @@ body {
   .select,
   .button {
     width: 100%;
+  }
+  .result-column {
+    margin-top: 20px;
+  }
+  .final-solution,
+  .graph-container {
+    padding: 15px;
   }
 }

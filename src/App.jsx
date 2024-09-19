@@ -57,11 +57,13 @@ const App = () => {
             <>
               <div className="final-solution">
                 <h3>Solução Final</h3>
-                <p>x1 = {solution.variables[0].toFixed(4)}</p>
-                <p>x2 = {solution.variables[1].toFixed(4)}</p>
-                <p>Valor Objetivo = {solution.objectiveValue.toFixed(4)}</p>
+                <div className="solution-details">
+                  <p><strong>x1:</strong> {solution.variables[0].toFixed(2)}</p>
+                  <p><strong>x2:</strong> {solution.variables[1].toFixed(2)}</p>
+                  <p><strong>Função Objetivo:</strong> {solution.objectiveValue.toFixed(2)}</p>
+                </div>
               </div>
-              <div className="graph">
+              <div className="graph-container">
                 <h3>Visualização Gráfica da Solução</h3>
                 <ResponsiveContainer width="100%" height={300}>
                   <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
