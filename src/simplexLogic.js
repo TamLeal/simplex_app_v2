@@ -26,10 +26,22 @@ export const solveSimplexProblem = (objective, constraints) => {
     const oldTableau = JSON.parse(JSON.stringify(tableau));
     pivot(tableau, pivotRow, pivotColumn);
     const changes = detectChanges(oldTableau, tableau);
-    
+
+    // Variáveis para a explicação mais detalhada
+    const enteringVar = pivotColumn < tableau[0].length - constraints.length ? `x${pivotColumn + 1}` : `s${pivotColumn - (tableau[0].length - constraints.length) + 1}`;
+    const leavingVar = `P${pivotRow + 1}`;  // Variável de folga que sai (base atual)
+
+    // Explicação detalhada do passo
+    const explanation = `
+      Pivô realizado na linha ${pivotRow + 1}, coluna ${pivotColumn + 1}.
+      A variável ${enteringVar} entrou no lugar da variável de folga ${leavingVar}.
+      A linha foi escolhida com base na regra do menor quociente (razão mínima), garantindo que o problema continue com uma solução factível.
+      A variável de folga ${leavingVar} saiu porque a solução atual pode ser melhorada com a introdução de ${enteringVar}.
+    `;
+
     steps.push({
       tableau: JSON.parse(JSON.stringify(tableau)),
-      explanation: `Pivô realizado na linha ${pivotRow + 1}, coluna ${pivotColumn + 1}.`,
+      explanation: explanation.trim(),
       changes: changes
     });
   }
@@ -125,7 +137,6 @@ const detectChanges = (oldTableau, newTableau) => {
   }
   return changes;
 };
-
 
 export const extractSolution = (tableau, numVariables) => {
   const solution = Array(numVariables).fill(0);
