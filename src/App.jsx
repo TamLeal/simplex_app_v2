@@ -28,38 +28,52 @@ const App = () => {
     <div className="container">
       <h1 className="header">Algoritmo Simplex</h1>
       
-      <ObjectiveFunction objective={objective} setObjective={setObjective} />
-      <Constraints constraints={constraints} setConstraints={setConstraints} objective={objective} />
-
-      <button onClick={solve} className="solve-button">Resolver</button>
-
-      {steps.length > 0 && (
-        <Solution 
-          steps={steps}
-          currentStep={currentStep}
-          setCurrentStep={setCurrentStep}
-          solution={solution}
-          objective={objective}
-        />
-      )}
-
-      {solution && (
-        <div>
-          <h3>Visualização Gráfica da Solução</h3>
-          <ResponsiveContainer width="100%" height={400}>
-            <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-              <CartesianGrid />
-              <XAxis type="number" dataKey="x" name="X" />
-              <YAxis type="number" dataKey="y" name="Y" />
-              <ZAxis type="category" dataKey="id" name="Constraint" />
-              <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-              <Legend />
-              <Scatter name="Restrições" data={generateGraphPoints(constraints, solution, objective)} fill="#8884d8" />
-              <Scatter name="Solução Ótima" data={[{ x: solution.variables[0], y: solution.variables[1], id: 'solution' }]} fill="#ff7300" />
-            </ScatterChart>
-          </ResponsiveContainer>
+      <div className="content">
+        <div className="column input-column">
+          <ObjectiveFunction objective={objective} setObjective={setObjective} />
+          <Constraints constraints={constraints} setConstraints={setConstraints} objective={objective} />
+          <button onClick={solve} className="solve-button">Resolver</button>
         </div>
-      )}
+        
+        <div className="column solution-column">
+          {steps.length > 0 && (
+            <Solution 
+              steps={steps}
+              currentStep={currentStep}
+              setCurrentStep={setCurrentStep}
+              objective={objective}
+            />
+          )}
+        </div>
+        
+        <div className="column result-column">
+          {solution && (
+            <>
+              <div className="final-solution">
+                <h3>Solução Final</h3>
+                <p>x1 = {solution.variables[0].toFixed(4)}</p>
+                <p>x2 = {solution.variables[1].toFixed(4)}</p>
+                <p>Valor Objetivo = {solution.objectiveValue.toFixed(4)}</p>
+              </div>
+              <div className="graph">
+                <h3>Visualização Gráfica da Solução</h3>
+                <ResponsiveContainer width="100%" height={300}>
+                  <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+                    <CartesianGrid />
+                    <XAxis type="number" dataKey="x" name="X" />
+                    <YAxis type="number" dataKey="y" name="Y" />
+                    <ZAxis type="category" dataKey="id" name="Constraint" />
+                    <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+                    <Legend />
+                    <Scatter name="Restrições" data={generateGraphPoints(constraints, solution, objective)} fill="#8884d8" />
+                    <Scatter name="Solução Ótima" data={[{ x: solution.variables[0], y: solution.variables[1], id: 'solution' }]} fill="#ff7300" />
+                  </ScatterChart>
+                </ResponsiveContainer>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
