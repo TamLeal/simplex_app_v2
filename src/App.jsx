@@ -1,50 +1,16 @@
 import React, { useState } from 'react';
-import {
-  ScatterChart,
-  Scatter,
-  XAxis,
-  YAxis,
-  ZAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from 'recharts';
-import {
-  solveSimplexProblem,
-  extractSolution,
-  generateGraphPoints,
-} from './simplexLogic.js';
+import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { solveSimplexProblem, extractSolution, generateGraphPoints } from './simplexLogic.js';
 import ObjectiveFunction from './components/ObjectiveFunction.jsx';
 import Constraints from './components/Constraints.jsx';
 import Solution from './components/Solution.jsx';
 import './App.css';
 
 const App = () => {
-  const [objective, setObjective] = useState({
-    z: [
-      { coeff: 3, sign: '+' },
-      { coeff: 2, sign: '+' },
-    ],
-    type: 'max',
-  });
+  const [objective, setObjective] = useState({ z: [{coeff: 3, sign: '+'}, {coeff: 2, sign: '+'}], type: 'max' });
   const [constraints, setConstraints] = useState([
-    {
-      coefficients: [
-        { coeff: 2, sign: '+' },
-        { coeff: 1, sign: '+' },
-      ],
-      inequality: '<=',
-      rhs: 8,
-    },
-    {
-      coefficients: [
-        { coeff: 1, sign: '+' },
-        { coeff: 3, sign: '+' },
-      ],
-      inequality: '<=',
-      rhs: 15,
-    },
+    { coefficients: [{coeff: 2, sign: '+'}, {coeff: 1, sign: '+'}], inequality: '<=', rhs: 8 },
+    { coefficients: [{coeff: 1, sign: '+'}, {coeff: 3, sign: '+'}], inequality: '<=', rhs: 15 },
   ]);
   const [steps, setSteps] = useState([]);
   const [currentStep, setCurrentStep] = useState(0);
@@ -61,20 +27,14 @@ const App = () => {
   return (
     <div className="container">
       <h1 className="header">Algoritmo Simplex Interativo e Preciso</h1>
-
+      
       <ObjectiveFunction objective={objective} setObjective={setObjective} />
-      <Constraints
-        constraints={constraints}
-        setConstraints={setConstraints}
-        objective={objective}
-      />
+      <Constraints constraints={constraints} setConstraints={setConstraints} objective={objective} />
 
-      <button onClick={solve} className="solve-button">
-        Resolver
-      </button>
+      <button onClick={solve} className="solve-button">Resolver</button>
 
       {steps.length > 0 && (
-        <Solution
+        <Solution 
           steps={steps}
           currentStep={currentStep}
           setCurrentStep={setCurrentStep}
@@ -94,22 +54,8 @@ const App = () => {
               <ZAxis type="category" dataKey="id" name="Constraint" />
               <Tooltip cursor={{ strokeDasharray: '3 3' }} />
               <Legend />
-              <Scatter
-                name="Restrições"
-                data={generateGraphPoints(constraints, solution, objective)}
-                fill="#8884d8"
-              />
-              <Scatter
-                name="Solução Ótima"
-                data={[
-                  {
-                    x: solution.variables[0],
-                    y: solution.variables[1],
-                    id: 'solution',
-                  },
-                ]}
-                fill="#ff7300"
-              />
+              <Scatter name="Restrições" data={generateGraphPoints(constraints, solution, objective)} fill="#8884d8" />
+              <Scatter name="Solução Ótima" data={[{ x: solution.variables[0], y: solution.variables[1], id: 'solution' }]} fill="#ff7300" />
             </ScatterChart>
           </ResponsiveContainer>
         </div>
