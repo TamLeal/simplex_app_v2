@@ -26,7 +26,7 @@ const App = () => {
 
   return (
     <div className="container">
-      <h1 className="header">Algoritmo Simplex Interativo e Preciso</h1>
+      <h1 className="header">Algoritmo Simplex</h1>
       
       <ObjectiveFunction objective={objective} setObjective={setObjective} />
       <Constraints constraints={constraints} setConstraints={setConstraints} objective={objective} />
