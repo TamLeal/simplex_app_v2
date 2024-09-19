@@ -102,19 +102,30 @@ const pivot = (tableau, pivotRow, pivotColumn) => {
 
 const detectChanges = (oldTableau, newTableau) => {
   const changes = [];
+  const numVariables = oldTableau[0].length - oldTableau.length; // Número de variáveis de decisão
+
   for (let i = 0; i < oldTableau.length; i++) {
     for (let j = 0; j < oldTableau[i].length; j++) {
       if (Math.abs(oldTableau[i][j] - newTableau[i][j]) > 1e-10) {
-        const rowName = i === oldTableau.length - 1 ? 'Z' : `x${i + 1}`;
-        const colName = j < oldTableau[0].length - 1 ? 
-          (j < oldTableau[0].length - oldTableau.length ? `x${j + 1}` : `s${j - oldTableau[0].length + oldTableau.length + 1}`) : 
-          'RHS';
+        // Definindo os nomes das variáveis de linha e coluna corretamente
+        const rowName = i === oldTableau.length - 1 ? 'Z' : `P${i + 1}`;
+        let colName;
+
+        if (j < numVariables) {
+          colName = `x${j + 1}`;  // Variáveis originais
+        } else if (j < oldTableau[0].length - 1) {
+          colName = `s${j - numVariables + 1}`;  // Variáveis de folga
+        } else {
+          colName = 'RHS';  // Termo independente
+        }
+
         changes.push(`${rowName}, ${colName}: ${oldTableau[i][j].toFixed(4)} → ${newTableau[i][j].toFixed(4)}`);
       }
     }
   }
   return changes;
 };
+
 
 export const extractSolution = (tableau, numVariables) => {
   const solution = Array(numVariables).fill(0);
