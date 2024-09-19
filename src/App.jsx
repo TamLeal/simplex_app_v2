@@ -15,6 +15,7 @@ const App = () => {
   const [steps, setSteps] = useState([]);
   const [currentStep, setCurrentStep] = useState(0);
   const [solution, setSolution] = useState(null);
+  const [isSolved, setIsSolved] = useState(false); // Estado para controlar a exibição dos cards
 
   const solve = () => {
     const solutionSteps = solveSimplexProblem(objective, constraints);
@@ -22,6 +23,7 @@ const App = () => {
     setCurrentStep(0);
     const finalTableau = solutionSteps[solutionSteps.length - 1].tableau;
     setSolution(extractSolution(finalTableau, objective.z.length));
+    setIsSolved(true); // Mostra os cards de resultados e soluções
   };
 
   return (
@@ -29,13 +31,15 @@ const App = () => {
       <h1 className="header">Algoritmo Simplex</h1>
       
       <div className="content">
+        {/* Coluna de Inputs */}
         <div className="column input-column">
           <ObjectiveFunction objective={objective} setObjective={setObjective} />
           <Constraints constraints={constraints} setConstraints={setConstraints} objective={objective} />
           <button onClick={solve} className="solve-button">Resolver</button>
         </div>
         
-        <div className="column solution-column">
+        {/* Coluna de Soluções */}
+        <div className={`column solution-column ${isSolved ? 'active' : ''}`}>
           {steps.length > 0 && (
             <Solution 
               steps={steps}
@@ -46,7 +50,8 @@ const App = () => {
           )}
         </div>
         
-        <div className="column result-column">
+        {/* Coluna de Resultados */}
+        <div className={`column result-column ${isSolved ? 'active' : ''}`}>
           {solution && (
             <>
               <div className="final-solution">
