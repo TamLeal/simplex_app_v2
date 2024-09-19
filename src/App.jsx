@@ -9,8 +9,9 @@ import './App.css';
 const App = () => {
   const [objective, setObjective] = useState({ z: [{coeff: 3, sign: '+'}, {coeff: 2, sign: '+'}], type: 'max' });
   const [constraints, setConstraints] = useState([
-    { coefficients: [{coeff: 2, sign: '+'}, {coeff: 1, sign: '+'}], inequality: '<=', rhs: 8 },
-    { coefficients: [{coeff: 1, sign: '+'}, {coeff: 3, sign: '+'}], inequality: '<=', rhs: 15 },
+    { coefficients: [{coeff: 2, sign: '+'}, {coeff: 1, sign: '+'}], inequality: '<=', rhs: 18 },
+    { coefficients: [{coeff: 2, sign: '+'}, {coeff: 3, sign: '+'}], inequality: '<=', rhs: 42 },
+    { coefficients: [{coeff: 3, sign: '+'}, {coeff: 1, sign: '+'}], inequality: '<=', rhs: 24 }
   ]);
   const [steps, setSteps] = useState([]);
   const [currentStep, setCurrentStep] = useState(0);
